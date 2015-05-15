@@ -1,0 +1,22 @@
+<link rel="import" href="../components/polymer/polymer.html">
+
+<polymer-element name="nacl-module" attributes="nmf type width height">
+   <template>
+      <embed id="module"
+            width={{width}} 
+            height={{height}} 
+            src="{{nmf}}" 
+            type="{{type}}" />
+   </template>
+   <script>
+      Polymer({
+         this.width = 0;
+         this.height = 0;
+
+         ready: function () {
+            this.module = this.$.module;
+            console.log(this.module);
+         };
+      });
+   </script>
+</polymer-element>
