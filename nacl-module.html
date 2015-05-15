@@ -1,22 +1,24 @@
 <link rel="import" href="../components/polymer/polymer.html">
 
-<polymer-element name="nacl-module" attributes="nmf type width height">
+<polymer-element 
+   name="nacl-module"
+   attributes="
+   	manifest
+   	mimetype
+      onok
+      onerror
+   	onloadstart
+   	onprogress
+   	onerror
+   	onabort
+   	onload
+   	onloadend
+   	oncrash"
+   width="0"
+   height="0"
+   mimetype="application/x-pnacl">
    <template>
-      <embed id="module"
-            width={{width}} 
-            height={{height}} 
-            src="{{nmf}}" 
-            type="{{type}}" />
+      <div id="listener"></div>
    </template>
-   <script>
-      Polymer({
-         this.width = 0;
-         this.height = 0;
-
-         ready: function () {
-            this.module = this.$.module;
-            console.log(this.module);
-         };
-      });
-   </script>
+   <script src="nacl-module.js"></script>
 </polymer-element>

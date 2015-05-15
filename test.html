@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Polymer Nacl Module Element Test Page</title>
+   <script src="../components/webcomponentsjs/webcomponents.js"></script>
+   <link rel="import" href="../nacl-module-polymer/nacl-module.html">
+</head>
+<body>
+   <nacl-module
+   	id="module"
+   	manifest="../pnacl/chmium.nmf"
+   	onloadstart="handleLoadStart()"
+   	onprogress="handleProgress()"
+	   onerror="handleError()"
+	   onabort="handleAbort()"
+	   onload="handleLoad()"
+	   onloadend="handleLoadEnd()"
+	   oncrash="handleCrash()"
+	   onmessage="handleMessage()">
+	</nacl-module>
+   <script>
+
+		function handleLoadStart() {
+   		console.log('loadStart');
+   	}
+
+   	function handleProgress() {
+   		console.log('progress');
+   	}
+
+   	function handleError() {
+   		console.log('error');
+   	}
+
+   	function handleAbort() {
+   		console.log('abort');
+   	}
+
+   	function handleLoad() {
+   		console.log('load');
+   	}
+
+   	function handleLoadEnd() {
+   		console.log('loadend');
+   	}
+
+   	function handleCrash() {
+   		console.log('crash');
+   	}
+
+   	function handleMessage() {
+   		console.log('messaged');
+   	}
+
+   </script>
+</body>
+</html>
