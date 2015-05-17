@@ -2,23 +2,53 @@
 
 <polymer-element 
    name="nacl-module"
-   attributes="
-   	manifest
-   	mimetype
-      onok
-      onerror
-   	onloadstart
-   	onprogress
-   	onerror
-   	onabort
-   	onload
-   	onloadend
-   	oncrash"
-   width="0"
-   height="0"
-   mimetype="application/x-pnacl">
+   attributes="widthheight manifest mimetype">
    <template>
-      <div id="listener"></div>
+      <div id="listener" style="height: {{height}}"></div>
    </template>
-   <script src="nacl-module.js"></script>
+   <script>
+      Polymer({
+         width: 0,
+         height: 0,
+         mimetype: "application/x-pnacl",
+
+         get readyState() {
+            return this.$.module.readyState || 0;
+         },
+
+         ready: function () {
+            this.eventNames = [
+               'loadstart',
+               'progress',
+               'error',
+               'abort',
+               'load',
+               'loadend',
+               'crash',
+               'message'
+            ];
+         },
+
+         listen: function (eventName, handler, useCapture) {
+            if (!eventName) {
+               this.eventNames.forEach(function (name) {
+                  this.$.listener.addEventListener(name, handler, useCapture);
+               }, this);
+            }
+            else {
+               this.$.listener.addEventListener(eventName, handler, useCapture);
+            }
+         },
+
+         domReady: function () {
+            this.module = document.createElement('embed');
+            this.module.setAttribute('id', 'module');
+            this.module.setAttribute('width', this.width);
+            this.module.setAttribute('height', this.height);
+            this.module.setAttribute('type', this.mimetype);
+            this.module.setAttribute('src', this.manifest);            
+            this.$.listener.appendChild(this.module);
+         }
+      });
+   </script>
 </polymer-element>
