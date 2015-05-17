@@ -17,30 +17,6 @@
          },
 
          ready: function () {
-            this.eventNames = [
-               'loadstart',
-               'progress',
-               'error',
-               'abort',
-               'load',
-               'loadend',
-               'crash',
-               'message'
-            ];
-         },
-
-         listen: function (eventName, handler, useCapture) {
-            if (!eventName) {
-               this.eventNames.forEach(function (name) {
-                  this.$.listener.addEventListener(name, handler, useCapture);
-               }, this);
-            }
-            else {
-               this.$.listener.addEventListener(eventName, handler, useCapture);
-            }
-         },
-
-         domReady: function () {
             this.module = document.createElement('embed');
             this.module.setAttribute('id', 'module');
             this.module.setAttribute('width', this.width);
