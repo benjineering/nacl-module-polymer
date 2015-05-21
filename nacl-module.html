@@ -2,29 +2,49 @@
 
 <polymer-element 
    name="nacl-module"
-   attributes="widthheight manifest mimetype">
+   attributes="width height manifest mimetype embedOnReady">
    <template>
       <div id="listener" style="height: {{height}}"></div>
    </template>
    <script>
-      Polymer({
-         width: 0,
-         height: 0,
-         mimetype: "application/x-pnacl",
 
-         get readyState() {
-            return this.$.module.readyState || 0;
-         },
+Polymer({
+   width: 0,
+   height: 0,
+   mimetype: "application/x-pnacl",
+   embedOnReady: true,
+   module: null,
 
-         ready: function () {
-            this.module = document.createElement('embed');
-            this.module.setAttribute('id', 'module');
-            this.module.setAttribute('width', this.width);
-            this.module.setAttribute('height', this.height);
-            this.module.setAttribute('type', this.mimetype);
-            this.module.setAttribute('src', this.manifest);            
-            this.$.listener.appendChild(this.module);
-         }
-      });
+   get listener() {
+      return this.$.listener;
+   },
+
+   get readyState() {
+      return this.$.module.readyState || 0;
+   },
+
+   ready: function () {
+      if (this.embedOnReady) {
+         this.embed();
+      }
+   },
+
+   embed: function () {
+      this.module = document.createElement('embed');
+      this.module.setAttribute('id', 'module');
+      this.module.setAttribute('width', this.width);
+      this.module.setAttribute('height', this.height);
+      this.module.setAttribute('type', this.mimetype);
+      this.module.setAttribute('src', this.manifest);            
+      this.$.listener.appendChild(this.module);
+   },
+
+   postMessage: function (message) {
+      if (this.module) {
+         this.module.postMessage(message);
+      }
+   }
+});
+      
    </script>
 </polymer-element>
